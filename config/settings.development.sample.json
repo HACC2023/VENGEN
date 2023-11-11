@@ -1,0 +1,23 @@
+{
+  "defaultAccounts": [
+    { "email": "admin@foo.com", "username": "Admin", "password": "changeme", "role": "admin" },
+    { "email": "john@foo.com", "username": "John", "password": "changeme" }
+  ],
+
+  "s3": {
+    "key": "YOUR-API-KEY",
+    "secret": "YOUR-SECRET-KEY",
+    "bucket": "YOUR-BUCKET-NAME",
+    "region": "YOUR-REGION"
+  },
+
+  "openai": {
+    "apiKey": "YOUR-API-KEY"
+  },
+  "mapbox": {
+    "apiKey": "YOUR-API-KEY"
+  },
+  "google": {
+    "apiKey": "YOUR-API-KEY"
+  }
+}
