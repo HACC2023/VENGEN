@@ -1,0 +1,41 @@
+name: ci-meteor-application-template-react
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./app
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-v5-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - run: npm ci --legacy-peer-deps
+
+      - run: curl https://install.meteor.com/ | sh
+
+      - name: Run Meteor commands
+        shell: bash -l {0}
+        run: |
+          meteor npm install
+          meteor npm run lint
+#          meteor npm run testcafe-ci
