@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
@@ -25,16 +26,17 @@ const SignUp = ({ location }) => {
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, username, password } = doc;
-    const userID = Accounts.createUser({ email, username, password }, (err) => {
+    Accounts.createUser({ email, username, password }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
         setError('');
-        setRedirectToRef(true);
+        const userID = Meteor.users.findOne({ username: username })._id;
+        Users.collection.insert({ _id: userID, username, email }, () => {
+          setRedirectToRef(true);
+        });
       }
     });
-
-    Users.collection.insert({ _id: userID, username, email });
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */

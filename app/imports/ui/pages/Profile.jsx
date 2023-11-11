@@ -17,12 +17,13 @@ const Profile = () => {
     const subscription = Meteor.subscribe(Users.userPublicationName);
     const modelsSub = Meteor.subscribe(Models.userPublicationName);
     const simSub = Meteor.subscribe(Simulations.userPublicationName);
-    const rdy = subscription.ready() && modelsSub.ready() && simSub.ready();
+    const rdy = subscription.ready() && modelsSub.ready() && simSub.ready() && Meteor.user() !== undefined;
 
     const models = [];
     const sims = [];
-    let modelItems;
-    let simItems;
+    let modelItems = [];
+    let simItems = [];
+
     if (rdy) {
       const usr = Users.collection.findOne({ _id: Meteor.user()._id });
 
@@ -45,8 +46,8 @@ const Profile = () => {
     return {
       likedModels: models,
       likedSims: sims,
-      myModels: modelItems === undefined ? [] : modelItems,
-      mySims: simItems === undefined ? [] : simItems,
+      myModels: modelItems,
+      mySims: simItems,
       ready: rdy,
     };
   }, []);
