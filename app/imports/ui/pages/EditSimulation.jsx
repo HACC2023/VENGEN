@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 import { Button, Col, Container, Form, Row, Spinner, Modal, InputGroup } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
@@ -294,7 +295,7 @@ const EditSimulation = () => {
 
   useEffect(() => {
 
-    if (!ready || map.current) return; // initialize map only once
+    if (!ready || map.current || document.getElementById('map') === null) return; // initialize map only once
 
     map.current = new mapboxgl.Map({
       container: 'map',
@@ -410,7 +411,7 @@ const EditSimulation = () => {
     });
   };
 
-  if (ready && (simulation.owner !== Meteor.user().username)) {
+  if (ready && (!Roles.userIsInRole(Meteor.user(), ['admin']) && simulation.owner !== Meteor.user().username)) {
     return (
       <div>
         <p>Not your simulation</p>

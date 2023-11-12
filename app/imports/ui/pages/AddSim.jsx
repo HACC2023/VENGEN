@@ -300,7 +300,7 @@ const AddSim = () => {
 
   useEffect(() => {
 
-    if (!ready || map.current) return; // initialize map only once
+    if (!ready || map.current || document.getElementById('map') === null) return; // initialize map only once
 
     map.current = new mapboxgl.Map({
       container: 'map',
