@@ -134,8 +134,8 @@ const ViewModel = () => {
     const s3Link = Images.findOne({ _id: model.modelS3 });
     const s3URL = s3Link.link();
     await loader.load(s3URL, function (gltf) {
-      gltf.scene.position.set(0, -25, 0);
-      gltf.scene.scale.set(0.5, 0.5, 0.5);
+      gltf.scene.position.set(0, 0, 0);
+      gltf.scene.scale.set(1, 1, 1);
       scene.add(gltf.scene);
       animate();
     });

@@ -163,8 +163,8 @@ const AddModel = () => {
     const url = URL.createObjectURL(file);
     loader.load(url, function (gltf) {
       const model = gltf.scene;
-      model.position.set(0, -25, 0);
-      model.scale.set(0.5, 0.5, 0.5);
+      model.position.set(0, 0, 0);
+      model.scale.set(1, 1, 1);
       scene.add(gltf.scene);
       animate();
     });
