@@ -79,6 +79,13 @@ const Message = ({ message, id }) => {
       Users.collection.update(me._id, { $set: { dislikes, likes } });
     }
 
+    if (discussion.messages[getMessageIndex()].likes < 0) {
+      discussion.messages[getMessageIndex()].likes = 0;
+    }
+    if (discussion.messages[getMessageIndex()].dislikes < 0) {
+      discussion.messages[getMessageIndex()].dislikes = 0;
+    }
+
     state.likes = discussion.messages[getMessageIndex()].likes;
     state.dislikes = discussion.messages[getMessageIndex()].dislikes;
     Discussions.collection.update(

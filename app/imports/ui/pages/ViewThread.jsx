@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Roles } from 'meteor/alanning:roles';
 import { Button, Container, Image, InputGroup, Row, Col, Modal } from 'react-bootstrap';
 import swal from 'sweetalert';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -133,9 +134,12 @@ const ViewThread = () => {
           <p style={{ color: 'grey' }}>Created by: {thread?.owner}</p>
         </Col>
         <Col>
-          <div className="mb-2" style={{ float: 'right' }}>
-            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>Delete Thread</Button>
-          </div>
+          <p style={{ textAlign: 'right' }}>{thread.messages[0].time.toLocaleDateString('en-us', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })}</p>
+          {(thread.owner === Meteor.user().username || Roles.userIsInRole(Meteor.user(), ['admin'])) ? (
+            <div className="mb-2" style={{ float: 'right' }}>
+              <Button variant="danger" onClick={() => setShowDeleteModal(true)}>Delete Thread</Button>
+            </div>
+          ) : ''}
           <div style={{ float: 'right', padding: '0px', marginRight: '2em' }} id="segmented-buttons-wrapper">
             <div id="segmented-like-button">
               {(Users.collection.findOne(Meteor.user()._id).likes.indexOf(_id) >= 0) ? (
@@ -169,6 +173,10 @@ const ViewThread = () => {
         </Col>
       </Row>
 
+      <Row className="my-4">
+        <p style={{ wordWrap: 'break-word', lineHeight: 'normal' }}>{thread.messages[0].message}</p>
+      </Row>
+
       <div id="discussion-input-box" style={inputStyle}>
         <div className="d-flex flex-row justify-content-between align-items-center w-100">
           <div>
@@ -196,7 +204,7 @@ const ViewThread = () => {
       <div style={{ overflowY: 'auto' }} ref={containerRef}>
         {(ready && thread && thread.messages.length !== 0) ? (
           <div>
-            {thread.messages.map((item, index) => (
+            {thread.messages.slice(1).map((item, index) => (
               <Message key={index} message={item} id={_id} />
             ))}
           </div>
