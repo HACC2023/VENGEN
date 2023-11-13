@@ -53,7 +53,7 @@ const NavBar = () => {
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
-            <NavDropdown id="navbar-current-user" title={currentUser} key="User">
+            <NavDropdown id="navbar-current-user" title={currentUser} align="end" key="User">
               <NavDropdown.Item id="navbar-profile" as={NavLink} key="profile" to="/profile">
                 <BsPersonSquare />
                 {' '}
