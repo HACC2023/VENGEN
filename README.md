@@ -47,8 +47,8 @@ Make a copy the settings.development.json file from config/ directory, and renam
 5. Open http://localhost:3000 to view the running local application.
 
 ### Important Links
-- GitHub Repository:
-- Deployed Application:
-- Functional Evaluation Video:
+- GitHub Repository: https://github.com/HACC2023/VENGEN/tree/main
+- Deployed Application: https://lahainasim.xyz/
+- Functional Evaluation Video: https://drive.google.com/file/d/1lE9r0g4pT7k2FOtk-q7PMih9YWjAVFag/view?usp=sharing
 
 Template Details: http://ics-software-engineering.github.io/meteor-application-template-react/
