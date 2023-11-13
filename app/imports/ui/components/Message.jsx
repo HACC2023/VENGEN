@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Roles } from 'meteor/alanning:roles';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import { HandThumbsDown, HandThumbsDownFill, HandThumbsUp, HandThumbsUpFill } from 'react-bootstrap-icons';
+import { HandThumbsDown, HandThumbsDownFill, HandThumbsUp, HandThumbsUpFill, XCircleFill } from 'react-bootstrap-icons';
 import { Users } from '../../api/user/User';
 import { Discussions } from '../../api/discussion/Discussion';
 
@@ -26,9 +27,20 @@ const Message = ({ message, id }) => {
 
   // eslint-disable-next-line no-unused-vars
   const [state, setState] = useState({
-    likes: discussion.messages[message.id].likes,
-    dislikes: discussion.messages[message.id].dislikes,
+    likes: message.likes,
+    dislikes: message.dislikes,
   });
+
+  const getMessageIndex = () => {
+    let index = 0;
+    // eslint-disable-next-line no-restricted-syntax
+    for (index in discussion.messages) {
+      if (discussion.messages[index].id === message.id) {
+        break;
+      }
+    }
+    return index;
+  };
 
   const handleLikeDislike = (likeDislike) => {
     const me = Users.collection.findOne({ _id: Meteor.user()._id });
@@ -40,43 +52,62 @@ const Message = ({ message, id }) => {
     if (likeDislike === 'like') {
       if (likeIndex >= 0) {
         likes.splice(likeIndex, 1);
-        discussion.messages[message.id].likes--;
+        discussion.messages[getMessageIndex()].likes--;
       } else if (dislikeIndex >= 0) {
         dislikes.splice(dislikeIndex, 1);
         likes.push(messageId);
-        discussion.messages[message.id].dislikes--;
-        discussion.messages[message.id].likes++;
+        discussion.messages[getMessageIndex()].dislikes--;
+        discussion.messages[getMessageIndex()].likes++;
       } else {
         likes.push(messageId);
-        discussion.messages[message.id].likes++;
+        discussion.messages[getMessageIndex()].likes++;
       }
       Users.collection.update(me._id, { $set: { dislikes, likes } });
     } else {
       if (dislikeIndex >= 0) {
         dislikes.splice(dislikeIndex, 1);
-        discussion.messages[message.id].dislikes--;
+        discussion.messages[getMessageIndex()].dislikes--;
       } else if (likeIndex >= 0) {
         likes.splice(likeIndex, 1);
         dislikes.push(messageId);
-        discussion.messages[message.id].likes--;
-        discussion.messages[message.id].dislikes++;
+        discussion.messages[getMessageIndex()].likes--;
+        discussion.messages[getMessageIndex()].dislikes++;
       } else {
         dislikes.push(messageId);
-        discussion.messages[message.id].dislikes++;
+        discussion.messages[getMessageIndex()].dislikes++;
       }
       Users.collection.update(me._id, { $set: { dislikes, likes } });
     }
 
-    state.likes = discussion.messages[message.id].likes;
-    state.dislikes = discussion.messages[message.id].dislikes;
+    if (discussion.messages[getMessageIndex()].likes < 0) {
+      discussion.messages[getMessageIndex()].likes = 0;
+    }
+    if (discussion.messages[getMessageIndex()].dislikes < 0) {
+      discussion.messages[getMessageIndex()].dislikes = 0;
+    }
+
+    state.likes = discussion.messages[getMessageIndex()].likes;
+    state.dislikes = discussion.messages[getMessageIndex()].dislikes;
     Discussions.collection.update(
       { _id: id },
       { $set: { messages: discussion.messages } },
     );
   };
 
+  const deleteMessage = () => {
+    const messages = discussion.messages;
+    messages.splice(getMessageIndex(), 1);
+
+    Discussions.collection.update(discussion._id, { $set: { messages } }, () => {
+      window.location.reload();
+    });
+  };
+
   return ready && discussion ? (
     <Container className="mb-3" style={{ borderWidth: 0.5, borderColor: '#dee2e6', borderStyle: 'solid', borderRadius: 5, margin: 10, padding: 10, width: '95%', minWidth: '400px' }}>
+      {(message.user === Meteor.user().username || Roles.userIsInRole(Meteor.user(), ['admin'])) ? (
+        <XCircleFill xs="true" color="red" className="mouse-hover-click" style={{ float: 'right', marginTop: '-18px', marginRight: '-18px' }} onClick={deleteMessage} />
+      ) : ''}
       <Row style={{ width: '100%', marginBottom: 5 }} className="d-flex align-items-center">
         <Col xs={2} className="d-flex justify-content-center align-items-center">
           <Image roundedCircle src="/images/pfp.jpg" width="40vh" />
