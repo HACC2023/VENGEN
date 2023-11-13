@@ -41,6 +41,9 @@ const Homepage = () => {
       if (model.like === 0 && model.dislike > 0) {
         return -1;
       }
+      if (model.dislike === 0) {
+        return model.like;
+      }
       return model.like / (model.like + model.dislike);
     }).reverse().slice(0, 7);
 
@@ -51,6 +54,9 @@ const Homepage = () => {
       if (thread.likes === 0 && thread.dislikes > 0) {
         return -1;
       }
+      if (thread.dislike === 0) {
+        return thread.like;
+      }
       return thread.likes / (thread.likes + thread.dislikes);
     }).reverse().slice(0, 7);
 
@@ -60,6 +66,9 @@ const Homepage = () => {
       }
       if (sim.like === 0 && sim.dislike > 0) {
         return -1;
+      }
+      if (sim.dislike === 0) {
+        return sim.like;
       }
       return sim.like / (sim.like + sim.dislike);
     }).reverse().slice(0, 9);
