@@ -45,7 +45,7 @@ const AddSim = () => {
     const subscription = Meteor.subscribe(Models.userPublicationName);
     const simSubscription = Meteor.subscribe(Simulations.userPublicationName);
     const imageSubscription = Meteor.subscribe('images.all');
-    const rdy = subscription.ready() && simSubscription.ready() && imageSubscription.ready();
+    const rdy = subscription.ready() && simSubscription.ready() && imageSubscription.ready() && mapboxgl.accessToken !== '';
     const modelItems = Models.collection.find({ show: true }).fetch();
     return {
       models: modelItems,
@@ -196,7 +196,7 @@ const AddSim = () => {
       });
       totalCost += thisModelData.cost;
     }
-    base64 = map.current.getCanvas().toDataURL();
+    base64 = map.current.getCanvas().toDataURL('image/jpeg', 0.5);
 
     const mapCenter = { lng: map.current.getCenter().lng, lat: map.current.getCenter().lat };
     const mapBearing = map.current.getBearing();

@@ -85,7 +85,7 @@ const AddModel = () => {
     renderer.state.reset();
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
-    modelBase64 = renderer.domElement.toDataURL();
+    modelBase64 = renderer.domElement.toDataURL('image/jpeg');
   };
 
   const initScene = () => {

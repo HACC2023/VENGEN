@@ -44,7 +44,7 @@ const ViewSimulation = () => {
     const modelSubscription = Meteor.subscribe(Models.userPublicationName);
     const userSubscription = Meteor.subscribe(Users.userPublicationName);
     const imageSubscription = Meteor.subscribe('images.all');
-    const rdy = subscription.ready() && modelSubscription.ready() && imageSubscription.ready() && userSubscription.ready();
+    const rdy = subscription.ready() && modelSubscription.ready() && imageSubscription.ready() && userSubscription.ready() && mapboxgl.accessToken !== '';
     const sim = Simulations.collection.findOne(_id);
 
     const modelItems = [];

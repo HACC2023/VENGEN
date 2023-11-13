@@ -44,7 +44,7 @@ const EditSimulation = () => {
     const subscription = Meteor.subscribe(Simulations.userPublicationName);
     const modelSubscription = Meteor.subscribe(Models.userPublicationName);
     const imageSubscription = Meteor.subscribe('images.all');
-    const rdy = subscription.ready() && modelSubscription.ready() && imageSubscription.ready();
+    const rdy = subscription.ready() && modelSubscription.ready() && imageSubscription.ready() && mapboxgl.accessToken !== '';
 
     const sim = Simulations.collection.findOne(_id);
     const modelItems = Models.collection.find({}).fetch();
@@ -192,7 +192,7 @@ const EditSimulation = () => {
       });
       totalCost += thisModelData.cost;
     }
-    base64 = map.current.getCanvas().toDataURL();
+    base64 = map.current.getCanvas().toDataURL('image/jpeg', 0.5);
 
     Simulations.collection.update(
       _id,
