@@ -220,7 +220,7 @@ const EditSimulation = () => {
     const editWindow = document.getElementById('edit-window');
 
     mouse.x = (event.point.x / (window.innerWidth - editWindow.clientWidth)) * 2 - 1;
-    mouse.y = -(event.point.y / (window.innerHeight - 50)) * 2 + 1;
+    mouse.y = -(event.point.y / (window.innerHeight - 110)) * 2 + 1;
 
     const camInverseProjection = new THREE.Matrix4();
     camInverseProjection.copy(camera.projectionMatrix).invert();
@@ -423,9 +423,9 @@ const EditSimulation = () => {
     <div>
       <Row>
         <Col>
-          <div id="map" style={{ height: window.innerHeight - 50 }} />
+          <div id="map" style={{ height: window.innerHeight - 110 }} />
         </Col>
-        <Col xs lg="2" className="pt-3" id="edit-window" style={{ height: window.innerHeight - 50, paddingRight: 20 }}>
+        <Col xs lg="2" className="pt-3" id="edit-window" style={{ height: window.innerHeight - 110, paddingRight: 20 }}>
           <Row className="mb-3">
             <h3>Navigate to Address:</h3>
             <PlaceForm setPlacesSearch={setPlacesSearch} />
