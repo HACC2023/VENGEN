@@ -72,7 +72,7 @@ const Profile = () => {
             </Row>
             {myModels.length === 0 ? (
             // eslint-disable-next-line react/no-unescaped-entities
-              <h4 className="my-3"> You haven't uploaded any models yet. Head to the New Model tab to start. </h4>
+              <h4 className="my-3"> You haven't uploaded any models yet. Head to Upload tab and select New Model to start. </h4>
             ) : (
               <Row xs={2} md={3} lg={4}>
                 {myModels.map((model) => <ModelItem key={model._id} model={model} />)}
@@ -98,7 +98,7 @@ const Profile = () => {
             </Row>
             {mySims.length === 0 ? (
             // eslint-disable-next-line react/no-unescaped-entities
-              <h4 className="my-3"> You haven't made any simulations yet. Head to the Simulation tab to start. </h4>
+              <h4 className="my-3"> You haven't made any simulations yet. Head to the Upload tab and select New Simulation to start. </h4>
             ) : (
               <Row xs={2} md={3} lg={4}>
                 {mySims.map((sim) => <SimulationItem key={sim._id} sim={sim} />)}

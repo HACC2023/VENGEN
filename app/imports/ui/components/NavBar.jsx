@@ -30,11 +30,13 @@ const NavBar = () => {
       <Navbar.Collapse id="basic-navbar-nav" color="white">
         <Nav className="me-auto justify-content-start">
           {currentUser ? ([
-            <Nav.Link id="add-sim-nav" as={NavLink} to="/SimGenerator" key="simGenerator">Simulation</Nav.Link>,
-            <Nav.Link id="add-model-nav" as={NavLink} to="/NewModel" key="addModel">New Model</Nav.Link>,
-            <Nav.Link id="view-gallery-nav" as={NavLink} to="/gallery" key="viewGallery">Gallery</Nav.Link>,
-            <Nav.Link id="statistics" as={NavLink} to="/Statistics" key="statistics">Statistics</Nav.Link>,
             <Nav.Link id="discussions" as={NavLink} to="/Discussions" key="discussions">Discussions</Nav.Link>,
+            <Nav.Link id="view-gallery-nav" as={NavLink} to="/gallery" key="viewGallery">Gallery</Nav.Link>,
+            <NavDropdown title="Upload" key="upload-new-nav" align="down-centered">
+              <NavDropdown.Item id="add-model-nav" as={NavLink} to="/NewModel" key="addModel">New Model</NavDropdown.Item>
+              <NavDropdown.Item id="add-sim-nav" as={NavLink} to="/SimGenerator" key="simGenerator">New Simulation</NavDropdown.Item>
+            </NavDropdown>,
+            <Nav.Link id="statistics" as={NavLink} to="/Statistics" key="statistics">Statistics</Nav.Link>,
           ]) : ''}
 
         </Nav>
@@ -51,7 +53,7 @@ const NavBar = () => {
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
-            <NavDropdown id="navbar-current-user" title={currentUser} key="User">
+            <NavDropdown id="navbar-current-user" title={currentUser} align="end" key="User">
               <NavDropdown.Item id="navbar-profile" as={NavLink} key="profile" to="/profile">
                 <BsPersonSquare />
                 {' '}
