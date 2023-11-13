@@ -1,10 +1,16 @@
 import React, { useState, useRef } from 'react';
-import { Button, Container, Image, InputGroup, Row, Col } from 'react-bootstrap';
+import { Button, Container, Image, InputGroup, Row, Col, Modal } from 'react-bootstrap';
 import swal from 'sweetalert';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import Form from 'react-bootstrap/Form';
-import { HandThumbsDown, HandThumbsDownFill, HandThumbsUp, HandThumbsUpFill } from 'react-bootstrap-icons';
+import {
+  ExclamationTriangle,
+  HandThumbsDown,
+  HandThumbsDownFill,
+  HandThumbsUp,
+  HandThumbsUpFill,
+} from 'react-bootstrap-icons';
 import { useParams } from 'react-router';
 import { Users } from '../../api/user/User';
 import { Discussions } from '../../api/discussion/Discussion';
@@ -17,6 +23,8 @@ const ViewThread = () => {
   const [state, setState] = useState({
     message: '',
   });
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const containerRef = useRef(null);
   const { ready, thread } = useTracker(() => {
     // Get access to Discussions documents.
@@ -42,15 +50,13 @@ const ViewThread = () => {
       const messageArr = thread.messages;
       const discID = thread._id;
       messageArr.push({
-        id: messageArr.length,
+        id: (messageArr.length > 0) ? messageArr[messageArr.length - 1].id + 1 : 0,
         user: owner,
         message: state.message,
         time: new Date(),
         likes: 0,
         dislikes: 0,
       });
-
-      console.log(messageArr);
 
       Discussions.collection.update(
         { _id: discID },
@@ -71,6 +77,12 @@ const ViewThread = () => {
 
       document.getElementById('message-input').value = '';
     }
+  };
+
+  const deleteThread = () => {
+    Discussions.collection.remove({ _id: _id });
+    setShowDeleteModal(false);
+    window.location.replace('/Discussions');
   };
 
   const handleLikeDislike = (likeDislike) => {
@@ -121,7 +133,10 @@ const ViewThread = () => {
           <p style={{ color: 'grey' }}>Created by: {thread?.owner}</p>
         </Col>
         <Col>
-          <div style={{ float: 'right', padding: '0px' }} id="segmented-buttons-wrapper">
+          <div className="mb-2" style={{ float: 'right' }}>
+            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>Delete Thread</Button>
+          </div>
+          <div style={{ float: 'right', padding: '0px', marginRight: '2em' }} id="segmented-buttons-wrapper">
             <div id="segmented-like-button">
               {(Users.collection.findOne(Meteor.user()._id).likes.indexOf(_id) >= 0) ? (
                 <span>
@@ -187,6 +202,22 @@ const ViewThread = () => {
           </div>
         ) : <p className="text-center">No messages in this discussion</p>}
       </div>
+
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} style={{ marginTop: '20vh' }}>
+        <Modal.Body className="py-5" style={{ textAlign: 'center' }}>
+          <ExclamationTriangle color="red" style={{ fontSize: '5vw' }} />
+          <h2>Are you sure?</h2>
+          <p><b>You are about to delete this thread.</b></p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={deleteThread}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </Container>
   ) : <LoadingSpinner />;

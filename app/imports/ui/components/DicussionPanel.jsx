@@ -40,7 +40,7 @@ const DiscussionPanel = ({ id, type }) => {
       const messageArr = discussion.messages;
       const discID = discussion._id;
       messageArr.push({
-        id: messageArr.length,
+        id: (messageArr.length > 0) ? messageArr[messageArr.length - 1].id + 1 : 0,
         user: owner,
         message: state.message,
         time: new Date(),
