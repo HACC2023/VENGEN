@@ -189,8 +189,8 @@ const AddModel = () => {
   return (
     <Container className="py-3 mt-5">
       <h1>New Model</h1>
-      <Row sm="1">
-        <Col xs lg="6">
+      <Row xs={1}>
+        <Col lg={6}>
           <div id="modelFrame" style={{ border: '1px solid black', aspectRatio: 1, width: '100%' }} />
           <p><b>Adjust the perspective you would like to display your model.</b></p>
           <ul>
@@ -199,7 +199,7 @@ const AddModel = () => {
             <li>Scrolling will zoom in and out.</li>
           </ul>
         </Col>
-        <Col xs lg="6">
+        <Col lg={6}>
           <Form.Group controlId="formFileLg" className="mb-3">
             <Form.Label style={{ fontSize: 20 }}>Upload 3D Model</Form.Label>
             <Form.Control type="file" size="lg" onChange={handleFileChange} />

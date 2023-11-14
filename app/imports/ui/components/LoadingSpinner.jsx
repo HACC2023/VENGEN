@@ -3,9 +3,11 @@ import { Container, Row, Spinner } from 'react-bootstrap';
 
 const LoadingSpinner = () => (
   <Container>
-    <Row className="justify-content-md-center">
+    <Row className="justify-content-center mb-3">
       <Spinner animation="border" />
-      Getting data
+    </Row>
+    <Row style={{ textAlign: 'center' }}>
+      <p>Loading... Please wait</p>
     </Row>
   </Container>
 );

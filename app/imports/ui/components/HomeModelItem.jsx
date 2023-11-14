@@ -8,18 +8,22 @@ const HomeModelItem = ({ model }) => (
   <>
     <a href={`/model/${model._id}`} style={{ textDecoration: 'none' }}>
       <Row className="mb-2">
-        <Col xs lg="4">
+        <Col xs={4}>
           <Image src={model.base64} style={{ width: '100%' }} />
         </Col>
         <Col style={{ color: 'black' }}>
           <b style={{ fontSize: '20px' }}>{model.name}</b>
-          <div style={{ float: 'right' }}>
+          <p style={{ fontSize: '14px' }}>By: {model.owner}</p>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div style={{ float: 'right', marginTop: '-2.5em' }}>
             <HandThumbsUpFill color="green" />
             <span style={{ marginRight: 5 }}>{model.like}</span>
             <HandThumbsDownFill color="red" />
             <span>{model.dislike}</span>
           </div>
-          <p style={{ fontSize: '14px' }}>By: {model.owner}</p>
         </Col>
       </Row>
     </a>
