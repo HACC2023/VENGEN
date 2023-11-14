@@ -16,7 +16,7 @@ const NavBar = () => {
   const userIcon = (<span> <AiOutlineUser /> </span>);
 
   return (
-    <Navbar expand="xl" className="px-5">
+    <Navbar expand="xl" className="px-5" id="main-navbar">
       {currentUser ? ([
         <Navbar.Brand as={NavLink} to="/home" key="logo">
           <Image src="/images/logo.png" width="200px" />

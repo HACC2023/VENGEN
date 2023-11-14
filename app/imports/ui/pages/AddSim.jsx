@@ -233,8 +233,16 @@ const AddSim = () => {
   function onClick(event) {
     event.preventDefault();
 
-    mouse.x = (event.point.x / (window.innerWidth)) * 2 - 1;
-    mouse.y = -(event.point.y / (window.innerHeight)) * 2 + 1;
+    const mapHeight = document.getElementById('map').clientHeight;
+    const navbarHeight = document.getElementById('main-navbar').clientHeight;
+    const editWindowWidth = document.getElementById('edit-window').clientWidth;
+
+    if (Math.abs(editWindowWidth - window.innerWidth) < 100) {
+      mouse.x = (event.point.x / (window.innerWidth)) * 2 - 1;
+    } else {
+      mouse.x = (event.point.x / (window.innerWidth - editWindowWidth)) * 2 - 1;
+    }
+    mouse.y = -(event.point.y / (window.innerHeight - (window.innerHeight - navbarHeight - mapHeight))) * 2 + 1;
 
     const camInverseProjection = new THREE.Matrix4();
     camInverseProjection.copy(camera.projectionMatrix).invert();
