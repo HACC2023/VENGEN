@@ -16,7 +16,7 @@ const HomeThreadItem = ({ thread }) => (
           <Col>
             <Chat />{`      ${thread.messages.length - 1} Comments`}
           </Col>
-          <Col>
+          <Col xs={5}>
             <div style={{ float: 'right' }}>
               <HandThumbsUpFill color="green" />
               <span style={{ marginRight: 5 }}>{thread.likes}</span>

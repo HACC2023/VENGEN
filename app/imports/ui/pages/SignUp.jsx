@@ -46,14 +46,14 @@ const SignUp = ({ location }) => {
     return <Navigate to={from} />;
   }
   return (
-    <Container id="signup-page" className="py-3 my-5">
+    <Container id="signup-page" className="py-md-3 my-md-5">
       <Row className="justify-content-center">
-        <Col xs={5}>
+        <Col lg={5}>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <CardGroup style={{ border: '3px solid #f8744d', borderRadius: '10px' }}>
               <Card>
                 <Card.Title className="text-center mt-5">Sign-Up</Card.Title>
-                <Card.Body className="p-5">
+                <Card.Body className="p-md-5">
                   <TextField name="email" placeholder="E-mail address" />
                   <TextField name="username" placeholder="Username" />
                   <TextField name="password" placeholder="Password" type="password" />

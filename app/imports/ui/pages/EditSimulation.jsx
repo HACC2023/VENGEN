@@ -217,10 +217,16 @@ const EditSimulation = () => {
   function onClick(event) {
     event.preventDefault();
 
-    const editWindow = document.getElementById('edit-window');
+    const mapHeight = document.getElementById('map').clientHeight;
+    const navbarHeight = document.getElementById('main-navbar').clientHeight;
+    const editWindowWidth = document.getElementById('edit-window').clientWidth;
 
-    mouse.x = (event.point.x / (window.innerWidth - editWindow.clientWidth)) * 2 - 1;
-    mouse.y = -(event.point.y / (window.innerHeight - 110)) * 2 + 1;
+    if (Math.abs(editWindowWidth - window.innerWidth) < 100) {
+      mouse.x = (event.point.x / (window.innerWidth)) * 2 - 1;
+    } else {
+      mouse.x = (event.point.x / (window.innerWidth - editWindowWidth)) * 2 - 1;
+    }
+    mouse.y = -(event.point.y / (window.innerHeight - (window.innerHeight - navbarHeight - mapHeight))) * 2 + 1;
 
     const camInverseProjection = new THREE.Matrix4();
     camInverseProjection.copy(camera.projectionMatrix).invert();
@@ -295,7 +301,13 @@ const EditSimulation = () => {
 
   useEffect(() => {
 
-    if (!ready || map.current || document.getElementById('map') === null) return; // initialize map only once
+    if (!ready || map.current || document.getElementById('map') === null || document.getElementById('edit-window') === null) return; // initialize map only once
+
+    if (Math.abs(document.getElementById('edit-window').clientWidth - window.innerWidth) < 100) {
+      document.getElementById('map').style.height = `${window.innerWidth * 0.6}px`;
+    } else {
+      document.getElementById('map').style.height = `${(window.innerWidth - document.getElementById('edit-window').clientWidth) * 0.6}px`;
+    }
 
     map.current = new mapboxgl.Map({
       container: 'map',
@@ -421,11 +433,11 @@ const EditSimulation = () => {
 
   return ready ? (
     <div>
-      <Row>
-        <Col>
-          <div id="map" style={{ height: window.innerHeight - 110 }} />
+      <Row xs={1} md={2}>
+        <Col lg={9}>
+          <div id="map" />
         </Col>
-        <Col xs lg="2" className="pt-3" id="edit-window" style={{ height: window.innerHeight - 110, paddingRight: 20 }}>
+        <Col lg={3} className="pt-3" id="edit-window" style={{ paddingRight: 20 }}>
           <Row className="mb-3">
             <h3>Navigate to Address:</h3>
             <PlaceForm setPlacesSearch={setPlacesSearch} />

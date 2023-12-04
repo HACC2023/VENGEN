@@ -110,9 +110,13 @@ const ViewSimulation = () => {
       return;
     }
 
-    const modelsWindow = document.getElementById('modelWindow');
+    const modelsWindowWidth = document.getElementById('modelWindow').clientWidth;
 
-    mouse.x = (event.point.x / (window.innerWidth - modelsWindow.clientWidth)) * 2 - 1;
+    if (Math.abs(modelsWindowWidth - window.innerWidth) < 100) {
+      mouse.x = (event.point.x / (window.innerWidth)) * 2 - 1;
+    } else {
+      mouse.x = (event.point.x / (window.innerWidth - modelsWindowWidth)) * 2 - 1;
+    }
     mouse.y = -(event.point.y / (window.innerHeight - 200)) * 2 + 1;
 
     const camInverseProjection = new THREE.Matrix4();
@@ -317,6 +321,10 @@ const ViewSimulation = () => {
   return ready ? (
     <div>
       <Row>
+        <Col md={9} style={{ padding: 0 }}>
+          <nav id="map-menu" />
+          <div id="map" style={{ height: window.innerHeight - 200 }} />
+        </Col>
         <Col md={3} id="modelWindow" style={{ overflowY: 'auto', borderRight: 'solid', borderColor: 'grey', borderWidth: 0.5 }}>
           <div style={{ padding: 10 }}>
             <h3 style={{ textAlign: 'center' }}>Models</h3>
@@ -330,18 +338,8 @@ const ViewSimulation = () => {
             </Row>
           </div>
         </Col>
-        <Col md={9} style={{ padding: 0 }}>
-          <nav id="map-menu" />
-          <div id="map" style={{ height: window.innerHeight - 200 }} />
-        </Col>
       </Row>
       <Row>
-        <Col xs lg="3" className="px-3">
-          {simulation.cost !== 0 ?
-            <h4>Estimated Cost: ${simulation.cost}</h4> :
-            <h5>No cost estimations provided</h5>}
-          <h4>Number of buildings: {uniqueModels.length}</h4>
-        </Col>
         <Col className="my-3">
           {(Users.collection.findOne(Meteor.user()._id).likes.indexOf(_id) >= 0) ? (
             <span>
@@ -372,6 +370,12 @@ const ViewSimulation = () => {
               <a href={`/editSimulation/${simulation._id}`} style={{ textDecoration: 'none' }}><Button variant="success" size="lg">Edit Simulation</Button></a>
             </div>
           ) : ''}
+        </Col>
+        <Col xs lg="3" className="px-3">
+          {simulation.cost !== 0 ?
+            <h4>Estimated Cost: ${simulation.cost}</h4> :
+            <h5>No cost estimations provided</h5>}
+          <h4>Number of buildings: {uniqueModels.length}</h4>
         </Col>
       </Row>
       <div className="py-5" style={{ borderTop: 'solid', borderColor: 'black', borderWidth: 0.5 }}>

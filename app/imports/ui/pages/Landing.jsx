@@ -27,15 +27,15 @@ const Landing = () => {
           )}
         </Col>
         <Col sm={7} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Image src="/images/landing-1.png" width="550px" />
+          <Image src="/images/landing-1.png" className="img-fluid" />
         </Col>
       </Row>
       <br />
       <br />
-      <Row style={{ borderTop: '5px solid red', display: 'flex', alignItems: 'center', backgroundColor: 'rgba(255, 53, 0, 0.75)' }}>
+      <Row style={{ borderTop: '5px solid red', display: 'flex', alignItems: 'center', backgroundColor: 'rgba(255, 53, 0, 0.75)' }} className="px-md-5">
         <Col sm={7} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
           <div>
-            <Image src="/images/landing-4.png" width="650px" />
+            <Image src="/images/landing-4.png" className="img-fluid vw-100" style={{ maxWidth: '660px' }} />
           </div>
         </Col>
         <Col sm={4} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', flexDirection: 'column', textAlign: 'right', color: 'white' }}>
@@ -109,7 +109,7 @@ const Landing = () => {
       <br />
       <br />
       <Row style={{ borderTop: '5px solid red', padding: '0 5%', display: 'flex', alignItems: 'center', backgroundColor: 'rgba(255, 53, 0, 0.75)', color: 'white' }}>
-        <Col sm={5} style={{ flexDirection: 'column' }}>
+        <Col sm={5} style={{ flexDirection: 'column' }} className="py-5">
           <h2 style={{ fontWeight: 'bold' }}>Lahaina &quot;Merciless Sun&quot; </h2>
           <br />
           <p>

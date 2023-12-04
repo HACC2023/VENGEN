@@ -106,7 +106,7 @@ const Homepage = () => {
         <Row>
           <Container className="shadow-lg p-3 mb-5 bg-white rounded">
             <h1>Featured Simulations</h1>
-            <Carousel id="featured-sim-carousel" style={{ paddingLeft: '5em', paddingRight: '5em' }}>
+            <Carousel id="featured-sim-carousel" style={{ paddingLeft: '3.5rem', paddingRight: '3.5rem' }}>
               {filteredSimulations.length > 0 ? (
                 <Carousel.Item>
                   <CarouselSimulationItem simulations={filteredSimulations.slice(0, 3)} />
@@ -125,8 +125,8 @@ const Homepage = () => {
             </Carousel>
           </Container>
         </Row>
-        <Row>
-          <Col>
+        <Row xs={1} md={2}>
+          <Col md={4}>
             <h1 className="align-items-left">Popular Models</h1>
             <Container id="landing-column-models" className="shadow-lg p-3 pb-5 mb-5 bg-white rounded">
               {filteredModels.map((model) => <HomeModelItem key={model._id} model={model} />)}
@@ -135,7 +135,7 @@ const Homepage = () => {
               </div>
             </Container>
           </Col>
-          <Col xs lg="8">
+          <Col md={8}>
             <h1 className="align-items-left">Top Threads</h1>
             <Container id="landing-column-discussions" className="shadow-lg p-3 pb-5 mb-5 bg-white rounded">
               {filteredThreads.map((thread) => <HomeThreadItem key={thread._id} thread={thread} />)}
